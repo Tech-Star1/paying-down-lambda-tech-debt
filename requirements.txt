@@ -1,0 +1,2 @@
+# Dev/test tooling for the lab. Runtime deps live per-service.
+pytest>=8.0

@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# AWS / SAM
+.aws-sam/
+samconfig.toml
+
+# AWS Transform working output (local branches are fine; ignore any exported artifacts)
+.atx/
+transform-output/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Secrets (never commit)
+.env
+*.pem
+*.key

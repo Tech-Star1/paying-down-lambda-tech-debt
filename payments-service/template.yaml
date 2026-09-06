@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  payments-service - mock estate on the end-of-support Python 3.10 runtime.
+  The runtime debt is declared here; nothing is deployed. AWS Transform
+  operates on the code under src/.
+
+Globals:
+  Function:
+    # END-OF-SUPPORT: Python 3.10 reaches Lambda EOL Oct 31, 2026.
+    Runtime: python3.10
+    Timeout: 15
+    MemorySize: 256
+
+Resources:
+  ChargeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: charge_handler.lambda_handler
+      CodeUri: src/
+
+  RefundFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: refund_handler.lambda_handler
+      CodeUri: src/
+
+  PayoutFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: payout_handler.lambda_handler
+      CodeUri: src/
+
+  SettlementFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: settlement_handler.lambda_handler
+      CodeUri: src/
+
+  ReconcileFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: reconcile_handler.lambda_handler
+      CodeUri: src/
