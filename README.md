@@ -108,7 +108,9 @@ the trust demo.
 | `payments-service/` | 5 handlers | `datetime.utcnow` deprecation, `distutils.strtobool` (removed 3.12), `imp` (removed 3.12), `cgi` (removed 3.13), strict-parity gate |
 | `identity-service/` | 4 handlers | `asyncio.get_event_loop`, invalid escape sequence, `typing`→builtins, `ssl.wrap_socket` (removed 3.12) |
 | `notifications-service/` | 4 handlers | `imghdr` (removed 3.13), `datetime.utcfromtimestamp`, `pipes` (removed 3.13), `locale.getdefaultlocale` |
-| _(remaining: `reporting-service`, `ledger-service` [PCI-scoped, 2nd parity gate], `fraud-detection-service` [`provided.al2` custom runtime])_ | | |
+| `reporting-service/` | 4 handlers | `@asyncio.coroutine` (removed 3.11), `distutils.LooseVersion` (removed 3.12), `OrderedDict`→dict, `crypt` (removed 3.13) |
+| `ledger-service/` (PCI) | 4 handlers | `utcfromtimestamp` **2nd parity gate**, recurring `distutils.strtobool` + invalid-escape, `typing`→builtins |
+| `fraud-detection-service/` | 3 handlers + `bootstrap` | **`provided.al2` custom runtime** (AL2 EoS) + `@asyncio.coroutine`, `distutils.LooseVersion`, `typing` |
 
 Each domain's `BATCH.md` is the authoritative per-batch manifest.
 

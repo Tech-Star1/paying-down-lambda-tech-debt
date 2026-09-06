@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  fraud-detection-service - mock estate on the CUSTOM `provided.al2` runtime
+  (Amazon Linux 2), itself end-of-support. Distinct from the managed
+  python3.10 domains: the runtime interface (bootstrap) AND the Python code
+  both have to be modernized. Nothing is deployed.
+
+Globals:
+  Function:
+    # CUSTOM RUNTIME on Amazon Linux 2 (provided.al2) - end-of-support.
+    # Migration target: a managed python3.13 runtime, or provided.al2023.
+    Runtime: provided.al2
+    Timeout: 15
+    MemorySize: 256
+
+Resources:
+  ScoreFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: score_handler.lambda_handler
+      CodeUri: src/
+      # bootstrap at the function root provides the custom runtime loop
+
+  RulesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: rules_handler.lambda_handler
+      CodeUri: src/
+
+  WatchlistFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: watchlist_handler.lambda_handler
+      CodeUri: src/

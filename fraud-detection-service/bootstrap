@@ -1,0 +1,29 @@
+#!/bin/sh
+# provided.al2 custom-runtime bootstrap (Amazon Linux 2).
+#
+# WHY THIS DOMAIN IS DIFFERENT: these functions do not run on a managed
+# python3.x runtime -- they run on the CUSTOM `provided.al2` runtime, which is
+# itself end-of-support (Amazon Linux 2). Modernizing a custom runtime is a
+# distinct AWS Transform scenario from a managed-runtime version bump: the
+# runtime interface (this bootstrap) AND the Python code both have to move.
+set -eu
+
+# _HANDLER is "<module>.<function>", e.g. score_handler.lambda_handler
+HANDLER_MODULE="${_HANDLER%.*}"
+HANDLER_FUNC="${_HANDLER##*.}"
+
+while true; do
+  HEADERS="$(mktemp)"
+  EVENT_DATA=$(curl -sS -LD "$HEADERS" \
+    "http://${AWS_LAMBDA_RUNTIME_API}/2018-06-01/runtime/invocation/next")
+  REQUEST_ID=$(grep -Fi Lambda-Runtime-Aws-Request-Id "$HEADERS" \
+    | tr -d '[:space:]' | cut -d: -f2)
+
+  RESPONSE=$(python3 -c "import json,sys; \
+from ${HANDLER_MODULE} import ${HANDLER_FUNC} as h; \
+print(json.dumps(h(json.loads(sys.argv[1]), None)))" "$EVENT_DATA")
+
+  curl -sS \
+    "http://${AWS_LAMBDA_RUNTIME_API}/2018-06-01/runtime/invocation/${REQUEST_ID}/response" \
+    -d "$RESPONSE"
+done
