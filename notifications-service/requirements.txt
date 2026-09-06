@@ -1,0 +1,3 @@
+# Runtime deps for notifications-service (deliberately stale pins - part of the debt).
+boto3==1.20.0
+jinja2==2.11.3

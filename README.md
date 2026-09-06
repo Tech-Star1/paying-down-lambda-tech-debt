@@ -105,8 +105,10 @@ the trust demo.
 
 | Domain | Scoping unit | Idiom spread |
 |--------|--------------|--------------|
-| `payments-service/` | 5 handlers | `datetime.utcnow` deprecation, `collections.Mapping` move, `distutils` removal, `imp` removal, strict-parity gate |
-| _(more domains land as the estate grows: identity, notifications, reporting, ledger, fraud-detection)_ | | |
+| `payments-service/` | 5 handlers | `datetime.utcnow` deprecation, `distutils.strtobool` (removed 3.12), `imp` (removed 3.12), `cgi` (removed 3.13), strict-parity gate |
+| `identity-service/` | 4 handlers | `asyncio.get_event_loop`, invalid escape sequence, `typing`→builtins, `ssl.wrap_socket` (removed 3.12) |
+| `notifications-service/` | 4 handlers | `imghdr` (removed 3.13), `datetime.utcfromtimestamp`, `pipes` (removed 3.13), `locale.getdefaultlocale` |
+| _(remaining: `reporting-service`, `ledger-service` [PCI-scoped, 2nd parity gate], `fraud-detection-service` [`provided.al2` custom runtime])_ | | |
 
 Each domain's `BATCH.md` is the authoritative per-batch manifest.
 
