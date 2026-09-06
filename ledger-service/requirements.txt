@@ -1,0 +1,3 @@
+# Runtime deps for ledger-service (deliberately stale pins - part of the debt).
+boto3==1.23.0
+cryptography==38.0.0

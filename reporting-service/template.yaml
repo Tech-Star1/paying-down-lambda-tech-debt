@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  reporting-service - mock estate on the end-of-support Python 3.10 runtime.
+  Runtime debt declared here; nothing is deployed.
+
+Globals:
+  Function:
+    # END-OF-SUPPORT: Python 3.10 reaches Lambda EOL Oct 31, 2026.
+    Runtime: python3.10
+    Timeout: 30
+    MemorySize: 512
+
+Resources:
+  ExportFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: export_handler.lambda_handler
+      CodeUri: src/
+
+  VersionFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: version_handler.lambda_handler
+      CodeUri: src/
+
+  AggregateFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: aggregate_handler.lambda_handler
+      CodeUri: src/
+
+  RenderFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: render_handler.lambda_handler
+      CodeUri: src/
