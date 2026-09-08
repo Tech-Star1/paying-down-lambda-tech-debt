@@ -29,3 +29,6 @@ transform-output/
 .env
 *.pem
 *.key
+
+# Local presenter run sheet (internal, not part of the public reference repo)
+demo-runbook.md
