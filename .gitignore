@@ -32,3 +32,7 @@ transform-output/
 
 # Local presenter run sheet (internal, not part of the public reference repo)
 demo-runbook.md
+
+# Transform demo artifacts (local, shown in-room; not part of the reference repo)
+validation_summary.md
+worklog.log
