@@ -63,8 +63,23 @@ Watch-the-gate note below).
 
 ## Running a batch (example: payments-service)
 
-Prereqs: WSL/Linux, AWS CLI v2, `atx` CLI installed, `python3` + `pytest`,
-`git`. (AWS Transform Custom runs on Linux/WSL only.)
+Prereqs: WSL/Linux, AWS CLI v2, `atx` CLI installed, `git`, and **two Python
+interpreters**: a **3.10** for the before-baseline and a **3.13** for the
+after-validation. (AWS Transform Custom runs on Linux/WSL only.)
+
+The 3.10 interpreter is not optional. Several seeded idioms (`distutils`, `imp`,
+`cgi`, `imghdr`, `pipes`, `crypt`, `@asyncio.coroutine`) were **removed** from
+newer Pythons, so the baseline tests only collect on 3.10. If you run them on a
+3.12+ interpreter they fail at import: that is the debt the lab is about, not a
+repo bug. Quickest way to get both interpreters without touching your system
+Python is [uv](https://docs.astral.sh/uv/):
+
+```bash
+uv venv --python 3.10 .venv310 && . .venv310/bin/activate   # baseline interpreter
+uv pip install -r requirements.txt                          # pytest only
+# later, for after-transform validation:
+# uv venv --python 3.13 .venv313 && . .venv313/bin/activate && uv pip install -r requirements.txt
+```
 
 ```bash
 # 0. baseline: prove the tests are green on 3.10 BEFORE you touch anything
@@ -125,4 +140,4 @@ Each domain's `BATCH.md` is the authoritative per-batch manifest.
 
 ## License
 
-MIT. Mock code for demonstration.
+MIT-0 (MIT No Attribution). Mock code for demonstration.

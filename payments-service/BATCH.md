@@ -21,7 +21,7 @@ naive-UTC** timestamp string (no `+00:00` offset). The obvious modernization
 (`datetime.now(timezone.utc)`) changes that string and **fails validation**,
 routing the change back. The behavior-preserving fix keeps the naive format
 explicitly. Watch which one the agent produces - that failure-routes-back
-moment is the compliance beat for the room.
+moment is the compliance beat of the whole lab.
 
 ## Interpreter requirement (important)
 
