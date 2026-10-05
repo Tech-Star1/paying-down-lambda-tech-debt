@@ -45,6 +45,23 @@ never touches a live function.
 
 ## The batching methodology (the reference pattern)
 
+```mermaid
+flowchart LR
+    E["Legacy estate<br/>(one folder = one service domain<br/>= one account boundary)"] --> P["Pick next batch<br/>(one domain)"]
+    P --> A["1. Assess the slice<br/>findings + dependency map"]
+    A --> S["2. Scope the run<br/>atx custom def exec -p ./&lt;domain&gt;/src"]
+    S --> V{"3. Validate against<br/>tests YOU define<br/>pytest, py_compile, parity"}
+    V -- "pass" --> R["4. Review the diff<br/>like a pull request"]
+    R --> M["5. Promote the batch"]
+    M --> P
+    V -- "fail (e.g. parity gate trips)" --> F["Route back for a fix<br/>does NOT ship"]
+    F --> S
+```
+
+The loop runs once per service domain. The validation gate is the point: a transform that
+changes behavior fails your tests and routes back; it never promotes on the agent's own
+"success" line.
+
 For each batch (one service domain):
 
 1. **Assess** the slice (`AWS/comprehensive-codebase-analysis` or the runtime
